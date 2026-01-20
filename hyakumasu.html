@@ -6,8 +6,8 @@
     <style>
         td {
             border: 1px solid black;
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             text-align: center;
         }
 
@@ -22,6 +22,13 @@
         #setsumei {
             margin-bottom: 10px;
         }
+
+        input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -31,6 +38,7 @@
         <h2>説明</h2>
         <p>これは百ます計算（かけ算）です。</p>
         <p>"答えを表示"ボタンを押すと答えが表示されます。</p>
+        <p>答えを表示したときの<span style="color:blue;">青い文字</span>は正解、<span style="color:red;">赤い文字</span>は不正解です。</p>
         <p>ブラウザを再読み込みすると、新しい問題が出ます。</p>
     </div>
 
@@ -52,6 +60,12 @@
                 const td = document.createElement("td");
                 td.id = `${x}${y}`;
                 tr.appendChild(td);
+
+                if (x > 0 && y > 0) {
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    td.appendChild(input);
+                }
             }
         }
 
@@ -95,9 +109,13 @@
                     const top = Number(document.getElementById(`${x}0`).textContent);
                     const left = Number(document.getElementById(`0${y}`).textContent);
 
-                    target.textContent = top * left;
+                    if (target.firstElementChild.value != "" && Number(target.firstElementChild.value) == top * left) {
+                        target.style = "color:blue;font-size: 30px;";
+                    } else {
+                        target.style = "color:red;font-size: 30px;";
+                    }
 
-                    target.style = "color:red";
+                    target.textContent = top * left;
                 }
             }
         }
