@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>百ます計算</title>
+    <style>
+        td {
+            border: 1px solid black;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 1px 3px;
+        }
+
+        p {
+            margin: 1px 3px;
+        }
+
+        #setsumei {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--説明-->
+    <div id="setsumei">
+        <h2>説明</h2>
+        <p>これは百ます計算（かけ算）です。</p>
+        <p>"答えを表示"ボタンを押すと答えが表示されます。</p>
+        <p>ブラウザを再読み込みすると、新しい問題が出ます。</p>
+    </div>
+
+    <!--百ます計算の表-->
+    <table id="hyakumasu"></table>
+
+    <button id="kotae">答えを表示</button>
+
+    <script>
+        // table
+        const table = document.getElementById("hyakumasu");
+
+        // 要素の追加
+        for (let y = 0; y < 11; y++) {
+            const tr = document.createElement("tr");
+            table.appendChild(tr);
+
+            for (let x = 0; x < 11; x++) {
+                const td = document.createElement("td");
+                td.id = `${x}${y}`;
+                tr.appendChild(td);
+            }
+        }
+
+        document.getElementById("00").textContent = "×"
+
+        // 左と上の数字
+        let topRandomNums = [];
+        for (let i = 1; i < 11; i++) {
+            let random;
+
+            while (true) {
+                random = Math.floor(Math.random() * 10);
+                if (!topRandomNums.includes(random)) {
+                    topRandomNums.push(random);
+                    break;
+                }
+            }
+            document.getElementById(`${i}0`).textContent = random;
+        }
+
+        let leftRandomNums = [];
+        for (let i = 1; i < 11; i++) {
+            let random;
+
+            while (true) {
+                random = Math.floor(Math.random() * 10);
+                if (!leftRandomNums.includes(random)) {
+                    leftRandomNums.push(random);
+                    break;
+                }
+            }
+            document.getElementById(`0${i}`).textContent = random;
+        }
+
+        // 答えの表示
+        function showKotae() {
+            for (let y = 1; y < 11; y++) {
+                for (let x = 1; x < 11; x++) {
+                    const target = document.getElementById(`${x}${y}`);
+
+                    const top = Number(document.getElementById(`${x}0`).textContent);
+                    const left = Number(document.getElementById(`0${y}`).textContent);
+
+                    target.textContent = top * left;
+
+                    target.style = "color:red";
+                }
+            }
+        }
+
+        document.getElementById("kotae").addEventListener("click", showKotae);
+    </script>
+</body>
+
+</html>
