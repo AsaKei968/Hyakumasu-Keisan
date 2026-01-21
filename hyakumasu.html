@@ -38,7 +38,8 @@
             display: flex;
         }
 
-        #kotae {
+        button {
+            margin-right: 50px;
             font-size: 50px;
         }
     </style>
@@ -53,9 +54,8 @@
         <p>"答え合わせ"ボタンを押すと答えが表示され、タイマーがストップします。</p>
         <p>答えを表示したときの<span style="color:blue;">青い文字</span>は正解、<span style="color:red;">赤い文字</span>は不正解です。</p>
         <p>ブラウザを再読み込みすると、新しい問題が出ます。</p>
+        <p>※スマホだとやりにくいです。パソコンでやることをお勧めします。</p>
     </div>
-
-    <button id="start">スタート</button>
 
     <main>
         <!--百ます計算の表-->
@@ -63,7 +63,10 @@
         <h1 id="time"></h1>
     </main>
 
+    <div>
+    <button id="start">スタート</button>
     <button id="kotae">答え合わせ</button>
+    </div>
 
     <!--script-->
     <script>
