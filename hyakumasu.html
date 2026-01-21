@@ -29,6 +29,18 @@
             text-align: center;
             font-size: 30px;
         }
+
+        #time {
+            padding: 250px 200px;
+        }
+
+        main {
+            display: flex;
+        }
+
+        #kotae {
+            font-size: 50px;
+        }
     </style>
 </head>
 
@@ -37,19 +49,35 @@
     <div id="setsumei">
         <h2>説明</h2>
         <p>これは百ます計算（かけ算）です。</p>
-        <p>"答えを表示"ボタンを押すと答えが表示されます。</p>
+        <p>"スタート"ボタンを押すとタイマーが始まります。</p>
+        <p>"答え合わせ"ボタンを押すと答えが表示され、タイマーがストップします。</p>
         <p>答えを表示したときの<span style="color:blue;">青い文字</span>は正解、<span style="color:red;">赤い文字</span>は不正解です。</p>
         <p>ブラウザを再読み込みすると、新しい問題が出ます。</p>
     </div>
 
-    <!--百ます計算の表-->
-    <table id="hyakumasu"></table>
+    <button id="start">スタート</button>
 
-    <button id="kotae">答えを表示</button>
+    <main>
+        <!--百ます計算の表-->
+        <table id="hyakumasu"></table>
+        <h1 id="time"></h1>
+    </main>
 
+    <button id="kotae">答え合わせ</button>
+
+    <!--script-->
     <script>
         // table
         const table = document.getElementById("hyakumasu");
+
+        let time = 0;
+        let sec = 0;
+        let min = 0;
+        let hour = 0;
+        let day = 0;
+        let week = 0;
+        let timer;
+        const timeElement = document.getElementById("time");
 
         // 要素の追加
         for (let y = 0; y < 11; y++) {
@@ -118,9 +146,33 @@
                     target.textContent = top * left;
                 }
             }
+
+            // タイマー停止
+            clearInterval(timer);
         }
 
         document.getElementById("kotae").addEventListener("click", showKotae);
+
+        // タイマー
+        function updateTime() {
+            time += 0.1;
+            sec = time % 60;
+            min = Math.floor(time % 3600 / 60);
+            if(min >= 60)
+                min = 0;
+            hour = Math.floor(time % 86400 / 3600);
+            if(hour >= 60)
+                hour = 0;
+            day = Math.floor(time % 611200 / 86400);
+            if(day >= 60)
+                day = 0;
+            week = Math.floor(time / 611200);
+            timeElement.textContent = `${week}week：${day}day：${hour}：${min}：${sec.toFixed(1)}`;
+        }
+
+        document.getElementById("start").addEventListener("click", function () {
+            timer = setInterval(updateTime, 0.1);
+        })
     </script>
 </body>
 
