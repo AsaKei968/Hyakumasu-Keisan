@@ -64,8 +64,8 @@
     </main>
 
     <div>
-    <button id="start">スタート</button>
-    <button id="kotae">答え合わせ</button>
+        <button id="start">スタート</button>
+        <button id="kotae">答え合わせ</button>
     </div>
 
     <!--script-->
@@ -80,6 +80,7 @@
         let day = 0;
         let week = 0;
         let timer;
+        let timeralready = false;
         const timeElement = document.getElementById("time");
 
         // 要素の追加
@@ -161,20 +162,23 @@
             time += 0.1;
             sec = time % 60;
             min = Math.floor(time % 3600 / 60);
-            if(min >= 60)
+            if (min >= 60)
                 min = 0;
             hour = Math.floor(time % 86400 / 3600);
-            if(hour >= 60)
+            if (hour >= 60)
                 hour = 0;
             day = Math.floor(time % 611200 / 86400);
-            if(day >= 60)
+            if (day >= 60)
                 day = 0;
             week = Math.floor(time / 611200);
             timeElement.textContent = `${week}week：${day}day：${hour}：${min}：${sec.toFixed(1)}`;
         }
 
         document.getElementById("start").addEventListener("click", function () {
-            timer = setInterval(updateTime, 100);
+            if (!timeralready) {
+                timer = setInterval(updateTime, 100);
+                timeralready = true;
+            }
         })
     </script>
 </body>
